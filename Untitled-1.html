@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Times Together</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <div class="container">
+        <img src="https://media1.tenor.com/images/b2c85bda67c05e092c5c0d53aeda26f7/tenor.gif?itemid=9668712" alt="Snoopy" class="snoopy">
+        <!-- Your other content goes here -->
+    </div>    
+    <!-- Times Together Section -->
+    <div class="times-together" id="timesContainer">
+      <h2>Times Together</h2>
+      <p>Want to see how long we've been together?</p>
+      <div class="choice-buttons">
+        <button onclick="startLoading()">Sure</button>
+        <button onclick="alert('Aww okay, maybe later 💙')">Maybe Later</button>
+    </div>
+
+      <div id="loadingSection" class="hidden">
+        <p>Calculating... Loading our time together...</p>
+        <div class="progress-bar">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+      </div>
+
+ 
+<div class="floating-texts">
+    <span>BABYYY!</span>
+    <span>I LOVE YOUU</span>
+    <span>1 YEAR?!?</span>
+    <span>Thank you for being here</span>
+    <span>Here's to more time together!!</span>
+    <span> My Wife </span>
+  </div>
+  
+
+      <div id="resultSection" class="hidden">
+        <p>We’ve been together for:</p>
+        <h3 id="duration"></h3>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
