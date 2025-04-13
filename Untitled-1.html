@@ -119,11 +119,11 @@
     const resultSection = document.getElementById("resultSection");
     const durationEl = document.getElementById("duration");
     const buttonChoices = document.getElementById("buttonChoices");
-
+  
     function startLoading() {
       buttonChoices.style.display = "none";
       loadingSection.classList.remove("hidden");
-
+  
       let width = 0;
       const interval = setInterval(() => {
         if (width >= 100) {
@@ -138,23 +138,45 @@
         }
       }, 30);
     }
-
+  
     function startTimer() {
-      const startDate = new Date("April 13, 2024 00:00:00").getTime();
+      const startDate = new Date("April 13, 2024 00:00:00");
+      
       setInterval(() => {
-        const now = new Date().getTime();
-        const diff = now - startDate;
-
-        const months = Math.floor(diff / (1000 * 60 * 60 * 24 * 30));
-        const days = Math.floor((diff / (1000 * 60 * 60 * 24)) % 30);
-        const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-        const minutes = Math.floor((diff / (1000 * 60)) % 60);
-        const seconds = Math.floor((diff / 1000) % 60);
-
-        durationEl.textContent = `${months} months, ${days} days, ${hours} hrs, ${minutes} mins, ${seconds} secs`;
+        const now = new Date();
+        const startYear = startDate.getFullYear();
+        const startMonth = startDate.getMonth(); // Month is zero-indexed
+        const startDay = startDate.getDate();
+  
+        const currentYear = now.getFullYear();
+        const currentMonth = now.getMonth();
+        const currentDay = now.getDate();
+  
+        let years = currentYear - startYear;
+        let months = currentMonth - startMonth;
+        let days = currentDay - startDay;
+  
+        // If the current day is before the start day in the current month, adjust months and days
+        if (months < 0 || (months === 0 && days < 0)) {
+          months += 12;
+          years--;
+        }
+  
+        if (days < 0) {
+          // If the current day is before the start day, calculate the previous month's days
+          const lastMonth = new Date(currentYear, currentMonth, 0);
+          days += lastMonth.getDate();
+        }
+  
+        const hours = now.getHours();
+        const minutes = now.getMinutes();
+        const seconds = now.getSeconds();
+  
+        // Update the duration text
+        durationEl.textContent = `${years} years, ${months} months, ${days} days, ${hours} hrs, ${minutes} mins, ${seconds} secs`;
       }, 1000);
     }
-
+  
     function startLoveSequence() {
       setTimeout(() => {
         alert("Click OK when you want us together 💙");
@@ -170,31 +192,32 @@
         }, 800);
       }, 800);
     }
-
+  
     function showMeTooButton() {
       const loveBtn = document.createElement("button");
       loveBtn.innerText = "Me too 💙";
       loveBtn.className = "love-sequence-btn";
       document.querySelector(".container").appendChild(loveBtn);
-
+  
       loveBtn.addEventListener("click", () => {
         alert("I love you 🥺💙");
         showILoveYouTooButton();
         loveBtn.remove();
       });
     }
-
+  
     function showILoveYouTooButton() {
       const replyBtn = document.createElement("button");
       replyBtn.innerText = "I love you too 💙";
       replyBtn.className = "love-sequence-btn";
       document.querySelector(".container").appendChild(replyBtn);
-
+  
       replyBtn.addEventListener("click", () => {
         alert("I love you more my babyy 😘💙");
         replyBtn.remove();
       });
     }
   </script>
+  
 </body>
 </html>
