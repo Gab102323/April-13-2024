@@ -23,9 +23,9 @@ body {
 /* Positioning the Snoopy GIF inside the container */
 .snoopy {
     position: absolute;
-    bottom: 10px;
-    right: 10px;
-    width: 80px;
+    bottom: -5px;
+    right: 60px;
+    width: 90px;
     animation: floatSnoopy 5s infinite alternate;
 }
 
