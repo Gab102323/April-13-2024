@@ -4,21 +4,100 @@
   <meta charset="UTF-8">
   <title>Times Together</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #dbeafe;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      max-width: 600px;
+      background: white;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      text-align: center;
+      position: relative;
+    }
+
+    .snoopy {
+      width: 100px;
+      margin-bottom: 20px;
+    }
+
+    .choice-buttons {
+      margin-top: 15px;
+    }
+
+    .choice-buttons button {
+      margin: 0 10px;
+      padding: 10px 18px;
+      border-radius: 20px;
+      font-size: 1em;
+      background: #3b82f6;
+      color: white;
+      border: none;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+
+    .choice-buttons button:hover {
+      background-color: #2563eb;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .progress-bar {
+      margin-top: 15px;
+      width: 100%;
+      height: 20px;
+      background: #eee;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: #3b82f6;
+      transition: width 0.3s;
+    }
+
+    .love-sequence-btn {
+      margin-top: 15px;
+      padding: 10px 20px;
+      font-size: 1em;
+      border-radius: 20px;
+      background-color: #6c63ff;
+      color: white;
+      border: none;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .love-sequence-btn:hover {
+      background-color: #4b42d7;
+    }
+  </style>
 </head>
 <body>
   <div class="container">
-    <div class="container">
-        <img src="https://media1.tenor.com/images/b2c85bda67c05e092c5c0d53aeda26f7/tenor.gif?itemid=9668712" alt="Snoopy" class="snoopy">
-        <!-- Your other content goes here -->
-    </div>    
-    <!-- Times Together Section -->
+    <img src="https://media1.tenor.com/images/b2c85bda67c05e092c5c0d53aeda26f7/tenor.gif?itemid=9668712" alt="Snoopy" class="snoopy">
+
     <div class="times-together" id="timesContainer">
       <h2>Times Together</h2>
       <p>Want to see how long we've been together?</p>
-      <div class="choice-buttons">
+      <div class="choice-buttons" id="buttonChoices">
         <button onclick="startLoading()">Sure</button>
         <button onclick="alert('Aww okay, maybe later 💙')">Maybe Later</button>
-    </div>
+      </div>
 
       <div id="loadingSection" class="hidden">
         <p>Calculating... Loading our time together...</p>
@@ -28,12 +107,94 @@
       </div>
 
       <div id="resultSection" class="hidden">
-        <p>Conversation started April 13 2024 at 6:42 Pm.</p>
+        <p>Conversation started April 13, 2024 💙</p>
         <h3 id="duration"></h3>
       </div>
     </div>
   </div>
 
-  <script src="script.js"></script>
+  <script>
+    const progressFill = document.getElementById("progressFill");
+    const loadingSection = document.getElementById("loadingSection");
+    const resultSection = document.getElementById("resultSection");
+    const durationEl = document.getElementById("duration");
+    const buttonChoices = document.getElementById("buttonChoices");
+
+    function startLoading() {
+      buttonChoices.style.display = "none";
+      loadingSection.classList.remove("hidden");
+
+      let width = 0;
+      const interval = setInterval(() => {
+        if (width >= 100) {
+          clearInterval(interval);
+          loadingSection.classList.add("hidden");
+          resultSection.classList.remove("hidden");
+          startTimer();
+          setTimeout(startLoveSequence, 2000);
+        } else {
+          width += 1;
+          progressFill.style.width = width + "%";
+        }
+      }, 30);
+    }
+
+    function startTimer() {
+      const startDate = new Date("April 13, 2024 00:00:00").getTime();
+      setInterval(() => {
+        const now = new Date().getTime();
+        const diff = now - startDate;
+
+        const months = Math.floor(diff / (1000 * 60 * 60 * 24 * 30));
+        const days = Math.floor((diff / (1000 * 60 * 60 * 24)) % 30);
+        const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        const minutes = Math.floor((diff / (1000 * 60)) % 60);
+        const seconds = Math.floor((diff / 1000) % 60);
+
+        durationEl.textContent = `${months} months, ${days} days, ${hours} hrs, ${minutes} mins, ${seconds} secs`;
+      }, 1000);
+    }
+
+    function startLoveSequence() {
+      setTimeout(() => {
+        alert("Click OK when you want us together 💙");
+        setTimeout(() => {
+          alert("Are you sure?");
+          setTimeout(() => {
+            alert("100% sure??");
+            setTimeout(() => {
+              alert("YAYYY, can't wait to build future with you 💙");
+              showMeTooButton();
+            }, 800);
+          }, 800);
+        }, 800);
+      }, 800);
+    }
+
+    function showMeTooButton() {
+      const loveBtn = document.createElement("button");
+      loveBtn.innerText = "Me too 💙";
+      loveBtn.className = "love-sequence-btn";
+      document.querySelector(".container").appendChild(loveBtn);
+
+      loveBtn.addEventListener("click", () => {
+        alert("I love you 🥺💙");
+        showILoveYouTooButton();
+        loveBtn.remove();
+      });
+    }
+
+    function showILoveYouTooButton() {
+      const replyBtn = document.createElement("button");
+      replyBtn.innerText = "I love you too 💙";
+      replyBtn.className = "love-sequence-btn";
+      document.querySelector(".container").appendChild(replyBtn);
+
+      replyBtn.addEventListener("click", () => {
+        alert("I love you more my babyy 😘💙");
+        replyBtn.remove();
+      });
+    }
+  </script>
 </body>
 </html>
